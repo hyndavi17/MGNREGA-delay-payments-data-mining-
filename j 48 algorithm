@@ -1,0 +1,29 @@
+General Decision tree algorithm
+The algorithm is called with three parameters: D, attribute list, and Attribute selection method. We refer to D as a data partition. Initially, it is the complete set of training tuples and their associated class labels. The parameter attribute list is a list of attributes describing the tuples. Attribute selection method specifies a heuristic procedure for selecting the attribute that “best” discriminates the given tuples according to class. This procedure employs an attribute selection measure such as information gain or the Gini index. Whether the tree is strictly binary is generally driven by the attribute selection measure. Some attribute selection measures, such as the Gini index, enforce the resulting tree to be binary. Others, like information gain do not, therein allowingmultiway splits (i.e., two or more branches to be grown from
+a node).
+The tree starts as a single node, N, representing the training tuples in D (step 1).
+Algorithm: Generate decision tree. Generate a decision tree from the training tuples of
+data partition, D.
+Input:
+Data partition, D, which is a set of training tuples and their associated class labels; attribute list, the set of candidate attributes; Attribute selection method, a procedure to determine the splitting criterion that “best” partitions the data tuples into individual classes. This criterion consists of a splitting attribute and, possibly, either a split-point or splitting subset.
+Output: A decision tree.
+Method:
+STEP 1: create a node N;
+STEP 2: if tuples in D are all of the same class, C, then
+STEP 3: return N as a leaf node labeled with the class C;
+STEP 4: if attribute list is empty then
+STEP 5: return N as a leaf node labeled with the majority class in D; // majority voting
+STEP 6: apply Attribute selection method(D, attribute list) to find the “best” splitting criterion;
+STEP 7: label node N with splitting criterion;
+STEP 8: if splitting attribute is discrete-valued and
+multiway splits allowed then // not restricted to binary trees
+STEP 9: attribute list  attribute list  splitting attribute;
+ // remove splitting attributes
+STEP 10: for each outcome j of splitting criterio
+// partition the tuples and grow subtrees for each partition
+STEP 11: let Dj be the set of data tuples in D satisfying outcome j; // a partition
+STEP 12: if Dj is empty then
+STEP 13: attach a leaf labeled with the majority class in D to node N;
+STEP 14: else attach the node returned by Generate decision tree(Dj , attribute list) to node N; endfor
+STEP 15: return N;
+If the tuples in D are all of the same class, then node N becomes a leaf and is labeled with that class (steps 2 and 3). Note that steps 4 and 5 are terminating conditions. All terminating conditions are explained at the end of the algorithm.
